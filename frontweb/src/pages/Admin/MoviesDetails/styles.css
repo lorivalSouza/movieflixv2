@@ -108,7 +108,12 @@ border-radius: 4px;
 
 @media(min-width:992px){
     .movie-img-container img{
+        margin-top: 30px;
         width: 50%;
+    }
+
+    .movie-synopsis-container {
+        margin-top: 30px;
     }
 
     .movie-details-container h1 {
