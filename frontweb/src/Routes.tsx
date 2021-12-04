@@ -1,35 +1,40 @@
 import Navbar from 'components/Navbar';
 import Admin from 'pages/Admin';
 import Auth from 'pages/Admin/Auth';
-import Movie from 'pages/Admin/Movie';
+import MovieCatalog from 'pages/Admin/MovieCatalog';
+import Movie from 'pages/Admin/MovieCatalog';
 import MoviesDetails from 'pages/Admin/MoviesDetails';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Router, Redirect, Route, Switch } from 'react-router-dom';
+import history from 'utils/history';
 
 const Routes = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <Navbar />
     <Switch>
-    <Redirect from="/" to="/admin/auth/login" exact />
+      <Redirect from="/" to="/admin/auth/login" exact />
       <Route path="/" exact>
         <Auth />
       </Route>
 
       <Route path="/movies" exact>
-            <Movie />
-          </Route>
-          <Route path="/movies/:movieId">
-            <MoviesDetails />
-          </Route>
+        <MovieCatalog />
+      </Route>
 
+      <Route path="/movies/:movieId">
+        <MoviesDetails />
+      </Route>
 
+      <Redirect from="/admin" to="/movies" exact />
       <Route path="/admin" exact>
         <Admin />
       </Route>
+
       <Route path="/admin/auth">
         <Auth />
       </Route>
+
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default Routes;

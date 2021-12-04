@@ -8,5 +8,5 @@ export type Movie = {
     imgUrl: string;
     synopsis: string;
     genre: Genre;
-    review: Review;
+    reviews: Review;
   };

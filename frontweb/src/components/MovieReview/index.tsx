@@ -1,8 +1,14 @@
 import ResultCard from 'components/ResultCard';
+import { User } from 'type/user';
 
 import './styles.css';
 
-const MoveiReview = () => {
+type Props ={
+  text: string;
+  name: string;
+}
+
+const MoveiReview = ({text, name } : Props) => {
   return (
     <>
       <div className="review-container">
@@ -24,8 +30,8 @@ const MoveiReview = () => {
         <>
           <div className="details-card">
             <div className="container-details">
-              <ResultCard username="Lorival Souza: "
-               description="Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing elit " />
+              <ResultCard username={name}
+               description={text} />
             </div>
             <div className="container-details">
               <ResultCard username="Mirian Souza: "

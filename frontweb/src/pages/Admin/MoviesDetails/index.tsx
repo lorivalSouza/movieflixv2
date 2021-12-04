@@ -1,12 +1,11 @@
 
 
-import axios from 'axios';
-import MoveiReview from 'components/MovieReview';
+import { AxiosRequestConfig } from 'axios';
 import ResultCard from 'components/ResultCard';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Movie } from 'type/movie';
-import { BASE_URL } from 'utils/request';
+import { requestBackend } from 'utils/request';
 import './styles.css';
 
 type urlParams = {
@@ -22,14 +21,16 @@ const MoviesDetails = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(`${BASE_URL}/movies/${movieId}`)
-      .then((response) => {
-        setMovie(response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: '/movies/' + movieId,
+      withCredentials: true,
+    };
+    requestBackend(params).then((response) => {
+      setMovie(response.data);
+    }).finally(() => {
+      setIsLoading(false);
+    });
   }, [movieId]);
 
   return (
@@ -81,7 +82,7 @@ const MoviesDetails = () => {
         <>
           <div className="details-card">
             <div className="container-details">
-              { movie && <ResultCard username="{movie?.review.user.name}"
+              { movie && <ResultCard username="{movie?.reviews.user.name}"
                description=" teste ainda{movie?.review.text}" />}
             </div>
             <div className="container-details">

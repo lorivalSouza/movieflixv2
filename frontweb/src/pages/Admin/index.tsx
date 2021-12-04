@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
-import Movie from "./Movie";
+import MovieCatalog from "./MovieCatalog";
+import Movie from "./MovieCatalog";
 import MoviesDetails from "./MoviesDetails";
 
 const Admin = () => {
@@ -8,7 +9,7 @@ const Admin = () => {
       <div className="admin-content">
         <Switch>
           <Route path="/admin/movies" exact>
-            <Movie />
+            <MovieCatalog />
           </Route>
           <Route path="/admin/movies/:movieId">
             <MoviesDetails />
