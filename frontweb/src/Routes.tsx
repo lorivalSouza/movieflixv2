@@ -2,10 +2,9 @@ import Navbar from 'components/Navbar';
 import Admin from 'pages/Admin';
 import Auth from 'pages/Admin/Auth';
 import MovieCatalog from 'pages/Admin/MovieCatalog';
-import Movie from 'pages/Admin/MovieCatalog';
 import MoviesDetails from 'pages/Admin/MoviesDetails';
 import { Router, Redirect, Route, Switch } from 'react-router-dom';
-import history from 'utils/history';
+import history from 'util/history';
 
 const Routes = () => (
   <Router history={history}>

@@ -1,6 +1,6 @@
-import { Route, Switch } from "react-router-dom";
+import PrivateRoute from "components/PrivateRoute";
+import { Switch } from "react-router-dom";
 import MovieCatalog from "./MovieCatalog";
-import Movie from "./MovieCatalog";
 import MoviesDetails from "./MoviesDetails";
 
 const Admin = () => {
@@ -8,12 +8,12 @@ const Admin = () => {
     <div className="admin-container">
       <div className="admin-content">
         <Switch>
-          <Route path="/admin/movies" exact>
+          <PrivateRoute path="/admin/movies">
             <MovieCatalog />
-          </Route>
-          <Route path="/admin/movies/:movieId">
+          </PrivateRoute>
+          <PrivateRoute path="/admin/movies/:movieId">
             <MoviesDetails />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </div>
     </div>

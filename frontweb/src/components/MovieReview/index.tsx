@@ -1,5 +1,4 @@
 import ResultCard from 'components/ResultCard';
-import { User } from 'type/user';
 
 import './styles.css';
 

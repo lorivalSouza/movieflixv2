@@ -1,21 +1,37 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import ButtonIcon from 'components/ButtonIcon';
-import { requestBackendLogin } from 'utils/request';
+import { requestBackendLogin } from 'util/request';
+import { useContext, useState } from 'react';
+import { getAuthData, saveAuthData } from 'util/storage';
+import { AuthContext } from 'AuthContext';
+import { getTokenData } from 'util/auth';
 
 import './styles.css';
-import { useState } from 'react';
-import { getAuthData, saveAuthData } from 'utils/storage';
 
 type FormData = {
   username: string;
   password: string;
 };
 
+type LocationState = {
+  from: string;
+};
+
 const Login = () => {
+  const location = useLocation<LocationState>();
+
+  const { from } = location.state || { from : { pathname: '/admin'}};
+
   const [hasError, setHasError] = useState(false);
 
-  const { register, handleSubmit, formState: {  errors} } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const { setAuthContextData } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -24,10 +40,14 @@ const Login = () => {
       .then((response) => {
         saveAuthData(response.data);
         const token = getAuthData().access_token;
-        console.log('access_token gerado: '+ token);
+        console.log('access_token gerado: ' + token);
         setHasError(false);
         console.log('Sucesso', response);
-        history.push('/admin');
+        setAuthContextData({
+          authenticated: true,
+          tokenData: getTokenData(),
+        });
+        history.replace(from);
       })
       .catch((error) => {
         setHasError(true);
@@ -48,11 +68,13 @@ const Login = () => {
               required: 'Campo obrigatório',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Email inválido'
+                message: 'Email inválido',
               },
             })}
             type="text"
-            className={`form-control base-input ${ errors.username ? 'is-invalid' : '' } `}
+            className={`form-control base-input ${
+              errors.username ? 'is-invalid' : ''
+            } `}
             placeholder="Email"
             name="username"
           />
@@ -63,10 +85,12 @@ const Login = () => {
         <div className="mb-2">
           <input
             {...register('password', {
-              required: 'Campo obrigatório'
+              required: 'Campo obrigatório',
             })}
             type="password"
-            className={`form-control base-input ${ errors.password ? 'is-invalid' : '' } `}
+            className={`form-control base-input ${
+              errors.password ? 'is-invalid' : ''
+            } `}
             placeholder="Password"
             name="password"
           />
